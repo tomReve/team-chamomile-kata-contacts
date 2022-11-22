@@ -3,7 +3,7 @@ const open = require('sqlite').open
 const fs = require('fs')
 
 const filename = 'contacts.sqlite3'
-const numContacts = 1000 // TODO: read from process.argv
+const numContacts = 10000 // TODO: read from process.argv
 
 const shouldMigrate = !fs.existsSync(filename)
 
@@ -38,7 +38,7 @@ const insertContacts = async (db) => {
   const iterator = generateContacts()
   for (var i = 0; i < numContacts; i++) {
     let contact = iterator.next().value;
-    db.run("insert into contacts (name,email) values (?, ?)", [contact[0], contact[1]]);
+    await db.run("insert into contacts (name,email) values (?, ?)", [contact[0], contact[1]]);
   }
 }
 
